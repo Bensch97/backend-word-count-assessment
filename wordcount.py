@@ -16,9 +16,39 @@ and print_top() functions which you write.
 how often each word appears in the text and prints:
 word1 count1
 word2 count2
-...
+"""
 
-Print the above list in order sorted by word (python will sort punctuation to
+def print_words(filename): 
+  d = {}
+  with open(filename,'r') as words:
+    for line in words:
+        for word in line.split():
+            lower = word.lower()
+            if lower not in d:
+              d[lower] = 1
+            else:
+              d[lower] += 1
+  print d
+
+def print_top(filename):
+  d = {}
+  with open(filename, 'r') as words:
+    for line in words:
+      for word in line.split():
+        lower = word.lower()
+        if lower not in d:
+          d[lower] = 1
+        else:
+          d[lower] += 1
+  import operator
+  sorted_d = sorted(d.items(), key=operator.itemgetter(1))
+  top_20 = list(reversed(sorted_d[-21:]))
+  print top_20
+
+
+
+
+"""Print the above list in order sorted by word (python will sort punctuation to
 come before letters -- that's fine). Store all the words as lowercase,
 so 'The' and 'the' count as the same word.
 
